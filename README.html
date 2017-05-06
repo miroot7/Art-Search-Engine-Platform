@@ -1,0 +1,52 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title></title>
+<style id="system" type="text/css">h1,h2,h3,h4,h5,h6,p,blockquote {    margin: 0;    padding: 0;}body {    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;    font-size: 13px;    line-height: 18px;    color: #737373;    margin: 10px 13px 10px 13px;}a {    color: #0069d6;}a:hover {    color: #0050a3;    text-decoration: none;}a img {    border: none;}p {    margin-bottom: 9px;}h1,h2,h3,h4,h5,h6 {    color: #404040;    line-height: 36px;}h1 {    margin-bottom: 18px;    font-size: 30px;}h2 {    font-size: 24px;}h3 {    font-size: 18px;}h4 {    font-size: 16px;}h5 {    font-size: 14px;}h6 {    font-size: 13px;}hr {    margin: 0 0 19px;    border: 0;    border-bottom: 1px solid #ccc;}blockquote {    padding: 13px 13px 21px 15px;    margin-bottom: 18px;    font-family:georgia,serif;    font-style: italic;}blockquote:before {    content:"C";    font-size:40px;    margin-left:-10px;    font-family:georgia,serif;    color:#eee;}blockquote p {    font-size: 14px;    font-weight: 300;    line-height: 18px;    margin-bottom: 0;    font-style: italic;}code, pre {    font-family: Monaco, Andale Mono, Courier New, monospace;}code {    background-color: #fee9cc;    color: rgba(0, 0, 0, 0.75);    padding: 1px 3px;    font-size: 12px;    -webkit-border-radius: 3px;    -moz-border-radius: 3px;    border-radius: 3px;}pre {    display: block;    padding: 14px;    margin: 0 0 18px;    line-height: 16px;    font-size: 11px;    border: 1px solid #d9d9d9;    white-space: pre-wrap;    word-wrap: break-word;}pre code {    background-color: #fff;    color:#737373;    font-size: 11px;    padding: 0;}@media screen and (min-width: 768px) {    body {        width: 748px;        margin:10px auto;    }}</style><style id="custom" type="text/css"></style></head>
+<body marginheight="0"><h1>Art Search Engine Platform</h1>
+<h2>Prerequisites</h2>
+<h3>python3.5+</h3>
+<h3>python libraries</h3>
+<ul>
+<li>See <code>requirement.txt</code> attached.</li>
+</ul>
+<h2>Usage</h2>
+<ul>
+<li><p>First, from the <code>DataFiltering</code> folder, you should be able to run <code>python -m DataFiltering.DataFiltering</code> and 
+<code>python -m DataFiltering.collocation</code> to preprocess the downloaded dataset from MoMA and Wikipedia.</p>
+</li>
+<li><p>Next, from the <code>root directory</code> of the repo, start the workers by run <code>python -m MapReduceFramework.workers</code>
+to start the map reduce framework. </p>
+</li>
+<li><p>Then from the same repo, you should be able to run 
+<code>python -m DistributedIndexer.start</code> 
+to acquire inverted index job outputs, IDF job output and document store jobs outputs.</p>
+</li>
+<li><p>Then use the command <code>python -m RelevanceAnalysis.relevant_analysis_start</code>
+to start the relevance analysis MapReduce program and write out the relevant document outputs. </p>
+</li>
+<li><p>After all MapReduce jobs completed, turn off the workers of MapReduce Framework.</p>
+</li>
+<li><p>Again from the same repo, you should run the following command 
+<code>python -m TFIDFPreCalculation.DataCombination</code> to combine the original data sets to one.
+and  then <code>python -m TFIDFPreCalculation.TFIDF_PreCalculation</code> for pre-calculating Inverted Index, IDF, TF-IDF calculation to avoid calculation during search engine data retrieval to accelerate the data retrieval time after the search engine started running to improve the search engine performance.</p>
+</li>
+<li><p>Then execute <code>python -m RelevanceAnalysis.relevant_extraction</code> to build the doc-list(docs) results. 
+Then, open <code>url: localhost:port/search?idx_job=x for x in range(4)</code> and replace port to the port number print on terminal </p>
+</li>
+<li><p>Finally, from the same repo again, run <code>python -m start_777</code> to start the search engine. By open url: <code>url: localhost:port</code>, replaced by the port number demonstrated on terminal, you can access the search engine and start searching.</p>
+</li>
+</ul>
+<h2>Note</h2>
+<ul>
+<li>If you failed to run the command lines above, you may replace all the <code>python</code> in the command lines with <code>python3</code></li>
+<li>If you come across "ImportError", you may not fully meet the prerequisites, please install the necessary python
+libraries as indicated in <code>Prerequisites</code></li>
+</ul>
+<h2>Author</h2>
+<ul>
+<li><a href="jl5006@nyu.edu">Jiaxuan Lu</a>(jl5006@nyu.edu) </li>
+<li><a href="nl1554@nyu.edu">Nan Liu</a>(nl1554@nyu.edu)</li>
+<li><a href="of394@nyu.edu">Oukan Fan</a>(of394@nyu.edu)</li>
+</ul>
+<p>Edit By <a href="http://mahua.jser.me">MaHua</a></p>
+</body></html>
